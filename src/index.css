@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: #070C18;
+  color: #ffffff;
+  overscroll-behavior: none;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #0D1526; }
+::-webkit-scrollbar-thumb { background: #1E3A5F; border-radius: 2px; }
+
+/* Card glow effect */
+.glow-blue {
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
+}
+
+.glow-sm {
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.1);
+}
+
+/* Touch-friendly active states */
+button:active, [role="button"]:active {
+  transform: scale(0.97);
+  transition: transform 0.1s;
+}
+
+/* No text selection on game elements */
+.no-select {
+  -webkit-user-select: none;
+  user-select: none;
+}
