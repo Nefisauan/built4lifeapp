@@ -22,12 +22,18 @@ export default {
           dim: '#0EA5E9',
           glow: '#7DD3FC',
         },
+        tan: {
+          DEFAULT: '#C5A670',
+          dark: '#A88A56',
+          light: '#D4BC91',
+        },
       },
       animation: {
         'fade-in': 'fadeIn 0.3s ease-in-out',
         'slide-up': 'slideUp 0.35s ease-out',
         'swipe-left': 'swipeLeft 0.35s ease-out forwards',
         'swipe-right': 'swipeRight 0.35s ease-out forwards',
+        'bounce-in': 'bounceIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
       },
       keyframes: {
         fadeIn: {
@@ -43,6 +49,10 @@ export default {
         },
         swipeRight: {
           '100%': { transform: 'translateX(130%) rotate(12deg)', opacity: '0' },
+        },
+        bounceIn: {
+          '0%': { transform: 'scale(0.7)', opacity: '0' },
+          '100%': { transform: 'scale(1)', opacity: '1' },
         },
       },
     },

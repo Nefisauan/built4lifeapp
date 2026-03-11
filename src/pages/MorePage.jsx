@@ -4,8 +4,8 @@ const resources = [
   {
     section: 'Academic',
     icon: GraduationCap,
-    color: 'text-cyan-400',
-    bg: 'bg-cyan-400/10',
+    color: 'text-electric',
+    bg: 'bg-electric/10',
     items: [
       { label: 'Tutoring Center', detail: 'Free, on-demand subject tutoring', icon: '📖' },
       { label: 'Academic Advising', detail: 'Plan your degree path', icon: '🗺️' },
@@ -16,8 +16,8 @@ const resources = [
   {
     section: 'Mental Health',
     icon: Heart,
-    color: 'text-purple-400',
-    bg: 'bg-purple-400/10',
+    color: 'text-sky-300',
+    bg: 'bg-sky-300/10',
     items: [
       { label: 'CAPS', detail: '(801) 422-3035 · Free & confidential', icon: '💜' },
       { label: 'Crisis Line', detail: '988 — 24/7 support', icon: '🆘' },
@@ -28,8 +28,8 @@ const resources = [
   {
     section: 'Career & NIL',
     icon: Briefcase,
-    color: 'text-yellow-400',
-    bg: 'bg-yellow-400/10',
+    color: 'text-tan',
+    bg: 'bg-tan/10',
     items: [
       { label: 'Career Center', detail: '3rd floor Wilk · Free advising', icon: '🚀' },
       { label: 'NIL Compliance', detail: 'Disclose deals before signing', icon: '⚖️' },
@@ -40,8 +40,8 @@ const resources = [
   {
     section: 'Safety & Reporting',
     icon: Shield,
-    color: 'text-orange-400',
-    bg: 'bg-orange-400/10',
+    color: 'text-electric',
+    bg: 'bg-electric/10',
     items: [
       { label: 'SafetyNet', detail: 'Anonymous concern reporting', icon: '🛡️' },
       { label: 'BYU Police', detail: '(801) 422-2222', icon: '🚔' },

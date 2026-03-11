@@ -138,8 +138,8 @@ export default function BudgetBlitz({ onBack }) {
 
       {/* Swipe hints */}
       <div className="flex items-center justify-between px-8 mb-2">
-        <span className="text-blue-400 text-xs font-medium opacity-60">← Save</span>
-        <span className="text-green-400 text-xs font-medium opacity-60">Spend →</span>
+        <span className="text-electric text-xs font-medium opacity-60">← Save</span>
+        <span className="text-tan text-xs font-medium opacity-60">Spend →</span>
       </div>
 
       {/* Card */}
@@ -161,14 +161,14 @@ export default function BudgetBlitz({ onBack }) {
           <div className="flex gap-3">
             <button
               onClick={() => handleSwipe('left')}
-              className="flex-1 py-3 rounded-xl bg-blue-500/15 border border-blue-500/30 text-blue-400 text-sm font-semibold"
+              className="flex-1 py-3 rounded-xl bg-electric/10 border border-electric/30 text-electric text-sm font-semibold"
               disabled={!!swipeDir}
             >
               {scenario.choices.swipeLeft.label}
             </button>
             <button
               onClick={() => handleSwipe('right')}
-              className="flex-1 py-3 rounded-xl bg-green-500/15 border border-green-500/30 text-green-400 text-sm font-semibold"
+              className="flex-1 py-3 rounded-xl bg-tan/10 border border-tan/30 text-tan text-sm font-semibold"
               disabled={!!swipeDir}
             >
               {scenario.choices.swipeRight.label}
@@ -182,15 +182,15 @@ export default function BudgetBlitz({ onBack }) {
       {/* Outcome reveal */}
       {outcome && (
         <div className={`mx-4 mt-4 p-4 rounded-2xl border animate-slide-up ${
-          outcome.type === 'success' ? 'bg-green-500/10 border-green-500/30' :
+          outcome.type === 'success' ? 'bg-electric/10 border-electric/30' :
           outcome.type === 'danger' ? 'bg-red-500/10 border-red-500/30' :
-          outcome.type === 'warning' ? 'bg-yellow-500/10 border-yellow-500/30' :
+          outcome.type === 'warning' ? 'bg-tan/10 border-tan/30' :
           'bg-navy-700 border-navy-600/60'
         }`}>
           <p className={`font-bold text-sm mb-1 ${
-            outcome.type === 'success' ? 'text-green-400' :
+            outcome.type === 'success' ? 'text-electric' :
             outcome.type === 'danger' ? 'text-red-400' :
-            outcome.type === 'warning' ? 'text-yellow-400' :
+            outcome.type === 'warning' ? 'text-tan' :
             'text-electric'
           }`}>{outcome.title}</p>
           <p className="text-slate-300 text-xs leading-relaxed">{outcome.message}</p>

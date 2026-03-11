@@ -63,7 +63,7 @@ export default function ProScout({ onBack }) {
   }
 
   const pct = Math.round((timeLeft / 60) * 100)
-  const timerColor = timeLeft > 20 ? '#38BDF8' : timeLeft > 10 ? '#FBBF24' : '#EF4444'
+  const timerColor = timeLeft > 20 ? '#38BDF8' : timeLeft > 10 ? '#C5A670' : '#EF4444'
 
   if (!started) {
     return (
@@ -167,7 +167,7 @@ export default function ProScout({ onBack }) {
               onClick={() => tapError(err.id)}
               className={`absolute flex items-center justify-center w-8 h-8 rounded-full border-2 transition-all ${
                 err.found
-                  ? 'bg-green-500/20 border-green-500 text-green-400'
+                  ? 'bg-electric/20 border-electric text-electric'
                   : 'bg-red-500/20 border-red-500/60 text-red-400 animate-pulse-slow'
               }`}
               style={{ left: `${err.x}%`, top: `${err.y + 60}px` }}
@@ -208,11 +208,11 @@ export default function ProScout({ onBack }) {
 
       {/* Feedback toast */}
       {feedback && (
-        <div className="mx-4 mt-3 p-3 rounded-xl bg-green-500/15 border border-green-500/30 animate-fade-in">
+        <div className="mx-4 mt-3 p-3 rounded-xl bg-electric/15 border border-electric/30 animate-fade-in">
           <div className="flex items-center gap-2">
-            <CheckCircle size={14} className="text-green-400 shrink-0" />
+            <CheckCircle size={14} className="text-electric shrink-0" />
             <div>
-              <p className="text-green-400 text-xs font-semibold">{feedback.label}</p>
+              <p className="text-electric text-xs font-semibold">{feedback.label}</p>
               <p className="text-slate-400 text-xs">{feedback.description}</p>
             </div>
           </div>
@@ -222,8 +222,8 @@ export default function ProScout({ onBack }) {
       {/* Hint list */}
       <div className="mx-4 mt-3 space-y-1.5">
         {profile.errors.map(err => (
-          <div key={err.id} className={`flex items-center gap-2 text-xs ${err.found ? 'text-green-400' : 'text-slate-600'}`}>
-            <div className={`w-1.5 h-1.5 rounded-full ${err.found ? 'bg-green-400' : 'bg-navy-600'}`} />
+          <div key={err.id} className={`flex items-center gap-2 text-xs ${err.found ? 'text-electric' : 'text-slate-600'}`}>
+            <div className={`w-1.5 h-1.5 rounded-full ${err.found ? 'bg-electric' : 'bg-navy-600'}`} />
             {err.found ? err.label : '???'}
           </div>
         ))}

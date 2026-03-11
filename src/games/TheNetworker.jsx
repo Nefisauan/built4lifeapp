@@ -95,18 +95,18 @@ export default function TheNetworker({ onBack }) {
   if (finished) {
     return (
       <div className="flex flex-col items-center justify-center min-h-full px-6 pb-20 text-center animate-fade-in">
-        <Trophy size={56} className="text-yellow-400 mb-4" />
+        <Trophy size={56} className="text-tan mb-4" />
         <h2 className="text-2xl font-bold text-white mb-2">Network Complete!</h2>
         <p className="text-slate-400 text-sm mb-6">You matched all {alumniCards.length} alumni. 🎉</p>
         <div className="w-full max-w-xs space-y-2 mb-8">
           {alumniCards.map(a => (
-            <div key={a.id} className="flex items-center gap-3 p-3 rounded-xl bg-navy-800 border border-green-500/20">
+            <div key={a.id} className="flex items-center gap-3 p-3 rounded-xl bg-navy-800 border border-electric/20">
               <div className="text-2xl">{a.emoji}</div>
               <div className="flex-1 text-left">
                 <p className="text-white text-sm font-medium">{a.name}</p>
                 <p className="text-slate-400 text-xs">{a.hint}</p>
               </div>
-              <Check size={16} className="text-green-400 shrink-0" />
+              <Check size={16} className="text-electric shrink-0" />
             </div>
           ))}
         </div>
@@ -152,7 +152,7 @@ export default function TheNetworker({ onBack }) {
               disabled={a.matched}
               className={`w-full p-3 rounded-xl border text-left transition-all ${
                 a.matched
-                  ? 'bg-green-500/10 border-green-500/30 opacity-60'
+                  ? 'bg-electric/10 border-electric/30 opacity-60'
                   : selectedAlumni === a.id
                   ? 'bg-electric/15 border-electric text-white'
                   : wrong?.alumni === a.id
@@ -161,7 +161,7 @@ export default function TheNetworker({ onBack }) {
               }`}
             >
               <div className="text-xl mb-1">{a.emoji}</div>
-              <p className={`text-xs font-medium leading-tight ${a.matched ? 'text-green-400' : 'text-white'}`}>{a.name}</p>
+              <p className={`text-xs font-medium leading-tight ${a.matched ? 'text-electric' : 'text-white'}`}>{a.name}</p>
               <p className="text-slate-500 text-xs leading-tight mt-0.5">{a.hint}</p>
               {a.matched && <Check size={12} className="text-green-400 mt-1" />}
             </button>
@@ -178,7 +178,7 @@ export default function TheNetworker({ onBack }) {
               disabled={ind.matched}
               className={`w-full p-3 rounded-xl border text-left transition-all ${
                 ind.matched
-                  ? 'bg-green-500/10 border-green-500/30 opacity-60'
+                  ? 'bg-electric/10 border-electric/30 opacity-60'
                   : wrong?.industry === ind.label
                   ? 'bg-red-500/15 border-red-500/40 scale-95'
                   : selectedAlumni
@@ -187,8 +187,8 @@ export default function TheNetworker({ onBack }) {
               }`}
             >
               <div className="text-xl mb-1">{ind.emoji}</div>
-              <p className={`text-xs font-medium ${ind.matched ? 'text-green-400' : 'text-white'}`}>{ind.label}</p>
-              {ind.matched && <Check size={12} className="text-green-400 mt-1" />}
+              <p className={`text-xs font-medium ${ind.matched ? 'text-electric' : 'text-white'}`}>{ind.label}</p>
+              {ind.matched && <Check size={12} className="text-electric mt-1" />}
             </button>
           ))}
         </div>

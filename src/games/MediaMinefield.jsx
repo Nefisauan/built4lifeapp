@@ -82,7 +82,7 @@ export default function MediaMinefield({ onBack }) {
     return (
       <div className="flex flex-col min-h-full pb-20 animate-fade-in">
         <div className="px-4 pt-10 pb-6 text-center">
-          <Trophy size={48} className="text-yellow-400 mx-auto mb-3" />
+          <Trophy size={48} className="text-tan mx-auto mb-3" />
           <h2 className="text-2xl font-bold text-white mb-1">Feed Review Complete</h2>
           <p className="text-slate-400 text-sm mb-4">{score}/{socialPosts.length} correct calls</p>
           <div className="text-5xl font-black text-electric mb-2">{pct}%</div>
@@ -102,7 +102,7 @@ export default function MediaMinefield({ onBack }) {
                 key={post.id}
                 className={`p-3 rounded-xl border ${
                   !didDecide ? 'border-navy-600/60 bg-navy-800' :
-                  wasCorrect ? 'border-green-500/30 bg-green-500/10' : 'border-red-500/30 bg-red-500/10'
+                  wasCorrect ? 'border-electric/30 bg-electric/10' : 'border-red-500/30 bg-red-500/10'
                 }`}
               >
                 <div className="flex items-start gap-2">
@@ -111,12 +111,12 @@ export default function MediaMinefield({ onBack }) {
                     <div className="flex items-center justify-between gap-2">
                       <span className="text-slate-400 text-xs font-medium">{post.user}</span>
                       {!didDecide && <span className="text-slate-600 text-xs">Not reviewed</span>}
-                      {didDecide && wasCorrect && <span className="text-green-400 text-xs font-medium">✓ Correct</span>}
+                      {didDecide && wasCorrect && <span className="text-electric text-xs font-medium">✓ Correct</span>}
                       {didDecide && !wasCorrect && <span className="text-red-400 text-xs font-medium">✗ Missed</span>}
                     </div>
                     <p className="text-slate-300 text-xs mt-1 leading-relaxed">{post.content}</p>
                     {post.shouldFlag && (
-                      <p className="text-yellow-400 text-xs mt-1.5 leading-relaxed">⚠️ {post.reason}</p>
+                      <p className="text-tan text-xs mt-1.5 leading-relaxed">⚠️ {post.reason}</p>
                     )}
                   </div>
                 </div>
@@ -176,7 +176,7 @@ export default function MediaMinefield({ onBack }) {
               key={post.id}
               className={`p-4 rounded-2xl bg-navy-800 border transition-all ${
                 hasDecided
-                  ? wasCorrect ? 'border-green-500/30' : 'border-red-500/30'
+                  ? wasCorrect ? 'border-electric/30' : 'border-red-500/30'
                   : 'border-navy-600/60'
               }`}
             >
@@ -199,7 +199,7 @@ export default function MediaMinefield({ onBack }) {
               </div>
 
               {revealed[post.id] ? (
-                <div className={`flex items-center gap-2 text-xs ${wasCorrect ? 'text-green-400' : 'text-red-400'}`}>
+                <div className={`flex items-center gap-2 text-xs ${wasCorrect ? 'text-electric' : 'text-red-400'}`}>
                   {wasCorrect
                     ? <><CheckCircle size={13} /> {post.shouldFlag ? 'Correctly flagged!' : 'Correctly cleared!'}</>
                     : <><Flag size={13} /> {post.shouldFlag ? 'Should have been flagged.' : 'This post was actually safe.'}</>
@@ -209,13 +209,13 @@ export default function MediaMinefield({ onBack }) {
                 <div className="flex gap-2">
                   <button
                     onClick={() => decide(post.id, true)}
-                    className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl bg-red-500/15 border border-red-500/30 text-red-400 text-xs font-semibold"
+                    className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl bg-red-500/10 border border-red-400/30 text-red-300 text-xs font-semibold"
                   >
                     <Flag size={12} /> FLAG
                   </button>
                   <button
                     onClick={() => decide(post.id, false)}
-                    className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl bg-green-500/15 border border-green-500/30 text-green-400 text-xs font-semibold"
+                    className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl bg-electric/10 border border-electric/30 text-electric text-xs font-semibold"
                   >
                     <CheckCircle size={12} /> SAFE
                   </button>

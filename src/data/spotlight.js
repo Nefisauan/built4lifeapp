@@ -7,7 +7,7 @@ export const spotlightAthletes = [
     year: 'Junior',
     major: 'Business Management',
     hometown: 'Kahuku, Hawaii',
-    photo: null, // Will use initials fallback
+    photo: null,
     achievement: 'Dean\'s List — 3.8 GPA while averaging 12 PPG',
     quote: '"Every drill in the gym is practice for discipline. Every page in a textbook is practice for strategy. They\'re the same skill."',
     highlights: [
@@ -16,7 +16,7 @@ export const spotlightAthletes = [
       { icon: '💼', label: 'Career', value: 'Summer internship at Goldman Sachs' },
       { icon: '🎯', label: 'On Court', value: '12 PPG, 7 RPG, 55% FG' },
     ],
-    color: 'from-blue-900 to-navy-800',
+    color: 'from-cougar to-navy-800',
     accentColor: 'text-electric',
   },
   {
@@ -36,8 +36,8 @@ export const spotlightAthletes = [
       { icon: '⚽', label: 'On Field', value: '8 assists, 4 goals — team captain' },
       { icon: '🌟', label: 'Leadership', value: 'Student-Athlete Advisory Council President' },
     ],
-    color: 'from-purple-900 to-navy-800',
-    accentColor: 'text-purple-400',
+    color: 'from-cougar-light to-navy-800',
+    accentColor: 'text-sky-300',
   },
   {
     id: 3,
@@ -56,8 +56,8 @@ export const spotlightAthletes = [
       { icon: '🚀', label: 'Startup', value: 'Accepted to BYU Founders accelerator' },
       { icon: '📱', label: 'NIL', value: 'Brand partnership with local tech startup' },
     ],
-    color: 'from-emerald-900 to-navy-800',
-    accentColor: 'text-emerald-400',
+    color: 'from-cougar-bright to-navy-800',
+    accentColor: 'text-tan',
   },
 ]
 
