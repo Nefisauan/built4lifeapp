@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Navigation from './components/Navigation'
+import ChatBot from './components/ChatBot'
 import HomePage from './pages/HomePage'
 import PlayPage from './pages/PlayPage'
 import SupportPage from './pages/SupportPage'
@@ -8,6 +9,7 @@ import MorePage from './pages/MorePage'
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('home')
+  const [chatOpen, setChatOpen] = useState(false)
 
   const pages = {
     home: <HomePage />,
@@ -25,7 +27,10 @@ export default function App() {
       </main>
 
       {/* Bottom Navigation */}
-      <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
+      <Navigation activeTab={activeTab} onTabChange={setActiveTab} onChatOpen={() => setChatOpen(true)} />
+
+      {/* AI Tutor Chatbot */}
+      <ChatBot open={chatOpen} onClose={() => setChatOpen(false)} />
     </div>
   )
 }
