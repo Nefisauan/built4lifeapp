@@ -9,6 +9,8 @@ const DOT_COLOR = {
   break: 'bg-electric',
   athletics: 'bg-electric',
   resource: 'bg-sky-300',
+  community: 'bg-electric',
+  career: 'bg-tan',
   urgent: 'bg-red-400',
 }
 

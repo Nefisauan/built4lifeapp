@@ -6,6 +6,7 @@ import PlayPage from './pages/PlayPage'
 import SupportPage from './pages/SupportPage'
 import SpotlightPage from './pages/SpotlightPage'
 import MorePage from './pages/MorePage'
+import TeamPage from './pages/TeamPage'
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('home')
@@ -16,6 +17,7 @@ export default function App() {
     play: <PlayPage />,
     support: <SupportPage />,
     spotlight: <SpotlightPage />,
+    team: <TeamPage />,
     more: <MorePage />,
   }
 

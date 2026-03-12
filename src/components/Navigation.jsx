@@ -1,11 +1,11 @@
-import { Home, Gamepad2, BookOpen, Star, LayoutGrid, MessageSquare } from 'lucide-react'
+import { Home, Gamepad2, BookOpen, Star, LayoutGrid, MessageSquare, Users } from 'lucide-react'
 
 const tabs = [
   { id: 'home', label: 'Home', icon: Home },
   { id: 'play', label: 'Play', icon: Gamepad2 },
   { id: 'support', label: 'Support', icon: BookOpen },
-  { id: 'spotlight', label: 'Spotlight', icon: Star },
-  { id: 'more', label: 'All Tools', icon: LayoutGrid },
+  { id: 'team', label: 'Team', icon: Users },
+  { id: 'more', label: 'More', icon: LayoutGrid },
 ]
 
 export default function Navigation({ activeTab, onTabChange, onChatOpen }) {

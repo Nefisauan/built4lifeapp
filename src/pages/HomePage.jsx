@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import { Zap, Plus, Settings2, Calendar } from 'lucide-react'
+import { Zap, Plus, Settings2, Calendar, Trophy, ChevronDown, ChevronUp } from 'lucide-react'
 import Header from '../components/Header'
 import MiniCalendar from '../components/MiniCalendar'
 import { upcomingDates, quickActions } from '../data/upcomingDates'
+import { alstonAward } from '../data/alstonData'
 
 
 function QuickActionModal({ action, onClose }) {
@@ -66,6 +67,100 @@ function QuickActionModal({ action, onClose }) {
           Close
         </button>
       </div>
+    </div>
+  )
+}
+
+function AlstonWidget() {
+  const [expanded, setExpanded] = useState(false)
+  const { title, subtitle, requirements, deadline } = alstonAward
+
+  const completed = requirements.filter(r => r.current >= r.target).length
+  const overall = Math.round((completed / requirements.length) * 100)
+
+  const daysLeft = Math.max(
+    0,
+    Math.round((new Date(deadline) - new Date()) / (1000 * 60 * 60 * 24))
+  )
+
+  return (
+    <div className="bg-navy-800 rounded-2xl border border-navy-600/40 overflow-hidden">
+      <button
+        onClick={() => setExpanded(e => !e)}
+        className="w-full flex items-center gap-3 px-4 py-4 text-left no-select active:bg-navy-700 transition-colors"
+      >
+        <div className="w-10 h-10 rounded-xl bg-tan/15 border border-tan/30 flex items-center justify-center text-xl shrink-0">
+          🏅
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-white font-semibold text-sm">{title}</p>
+          <p className="text-slate-500 text-xs truncate">{subtitle}</p>
+        </div>
+        <div className="flex items-center gap-2 shrink-0">
+          <span className="text-tan font-bold text-sm">{overall}%</span>
+          {expanded ? (
+            <ChevronUp size={16} className="text-slate-500" />
+          ) : (
+            <ChevronDown size={16} className="text-slate-500" />
+          )}
+        </div>
+      </button>
+
+      {/* Overall progress bar */}
+      <div className="px-4 pb-3">
+        <div className="h-1.5 bg-navy-700 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-gradient-to-r from-tan to-electric rounded-full transition-all duration-500"
+            style={{ width: `${overall}%` }}
+          />
+        </div>
+        <p className="text-slate-500 text-xs mt-1.5">
+          {completed}/{requirements.length} requirements met · {daysLeft}d until deadline
+        </p>
+      </div>
+
+      {/* Expanded requirements list */}
+      {expanded && (
+        <div className="border-t border-navy-600/40">
+          {requirements.map((req, i) => {
+            const pct = Math.min(100, Math.round((req.current / req.target) * 100))
+            const done = req.current >= req.target
+
+            let statusLabel = ''
+            if (req.type === 'boolean') statusLabel = done ? 'Done' : 'Pending'
+            else if (req.type === 'threshold') statusLabel = done ? '✓ Met' : 'Not met'
+            else statusLabel = `${req.current}/${req.target}`
+
+            return (
+              <div
+                key={req.id}
+                className={`px-4 py-3 ${i < requirements.length - 1 ? 'border-b border-navy-600/30' : ''}`}
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-base shrink-0">{req.icon}</span>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="text-white text-xs font-medium">{req.label}</p>
+                      <span className={`text-xs font-bold ${done ? 'text-electric' : 'text-slate-500'}`}>
+                        {statusLabel}
+                      </span>
+                    </div>
+                    {req.type === 'progress' && (
+                      <div className="h-1 bg-navy-700 rounded-full overflow-hidden">
+                        <div
+                          className={`h-full rounded-full transition-all duration-500 ${done ? 'bg-electric' : 'bg-tan'}`}
+                          style={{ width: `${pct}%` }}
+                        />
+                      </div>
+                    )}
+                    <p className="text-slate-500 text-[10px] mt-0.5">{req.description}</p>
+                  </div>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }
@@ -170,6 +265,15 @@ export default function HomePage() {
               )
             })}
           </div>
+        </section>
+
+        {/* Alston Award Progress */}
+        <section>
+          <div className="flex items-center gap-2 mb-2.5">
+            <Trophy size={14} className="text-tan" />
+            <h2 className="text-white font-bold text-base">Alston Award</h2>
+          </div>
+          <AlstonWidget />
         </section>
 
         {/* Daily Edge widget */}

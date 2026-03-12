@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { ArrowLeft, Trophy, Eye, ChevronRight, Users, Star } from 'lucide-react'
-import { guessWhoProAthletes, guessWhoBYUAthletes } from '../data/gameData'
+import { ArrowLeft, Trophy, Eye, ChevronRight, Users, Star, Zap } from 'lucide-react'
+import { guessWhoProAthletes, guessWhoBYUAthletes, guessWhoBYUCurrentAthletes } from '../data/gameData'
 
 // Shuffle array deterministically per round
 function shuffle(arr) {
@@ -26,7 +26,10 @@ export default function GuessWhoIAm({ onBack }) {
   const current = deck[deckIndex]
 
   function startGame(selectedMode) {
-    const source = selectedMode === 'pro' ? guessWhoProAthletes : guessWhoBYUAthletes
+    const source =
+      selectedMode === 'pro' ? guessWhoProAthletes
+      : selectedMode === 'current' ? guessWhoBYUCurrentAthletes
+      : guessWhoBYUAthletes
     const shuffled = shuffle(source)
     setMode(selectedMode)
     setDeck(shuffled)
@@ -125,10 +128,23 @@ export default function GuessWhoIAm({ onBack }) {
             >
               <div className="flex items-center gap-3 mb-2">
                 <span className="text-xl font-black text-white">Y</span>
-                <span className="text-white font-bold text-base">BYU Athletes</span>
+                <span className="text-white font-bold text-base">BYU Legends</span>
               </div>
               <p className="text-slate-400 text-sm">Jimmer, Steve Young, Ty Detmer, Danny Ainge &amp; more.</p>
               <p className="text-tan text-xs mt-2">{guessWhoBYUAthletes.length} athletes →</p>
+            </button>
+
+            <button
+              onClick={() => startGame('current')}
+              className="w-full p-5 rounded-2xl text-left bg-gradient-to-br from-cougar to-cougar-bright border border-electric/30"
+            >
+              <div className="flex items-center gap-3 mb-2">
+                <Zap size={18} className="text-electric" />
+                <span className="text-white font-bold text-base">BYU Current Stars</span>
+                <span className="px-1.5 py-0.5 rounded bg-electric text-navy-900 text-[9px] font-black">NEW</span>
+              </div>
+              <p className="text-slate-400 text-sm">AJ Dybantsa, Bear Bachmeier, Jane Hedengren &amp; more.</p>
+              <p className="text-electric text-xs mt-2">{guessWhoBYUCurrentAthletes.length} athletes →</p>
             </button>
           </div>
 
@@ -149,7 +165,7 @@ export default function GuessWhoIAm({ onBack }) {
         <div className="px-4 pt-10 pb-6 text-center">
           <Trophy size={48} className="text-tan mx-auto mb-3" />
           <h2 className="text-2xl font-bold text-white mb-1">
-            {mode === 'pro' ? 'Pro Athlete' : 'BYU Athlete'} Results
+            {mode === 'pro' ? 'Pro Athlete' : mode === 'current' ? 'BYU Current Stars' : 'BYU Legends'} Results
           </h2>
           <p className="text-slate-400 text-sm mb-1">{correct}/{deck.length} correct</p>
           <div className="text-5xl font-black text-electric mt-3 mb-1">{score} pts</div>
@@ -214,7 +230,7 @@ export default function GuessWhoIAm({ onBack }) {
           <div className="flex items-center justify-between mb-1">
             <div className="flex items-center gap-2">
               <span className="text-white text-sm font-semibold">
-                {mode === 'pro' ? '⭐ Pro Athletes' : '🔵 BYU Athletes'}
+                {mode === 'pro' ? '⭐ Pro Athletes' : mode === 'current' ? '⚡ BYU Current' : '🔵 BYU Legends'}
               </span>
               <span className="text-slate-600 text-xs">
                 {deckIndex + 1}/{deck.length}
