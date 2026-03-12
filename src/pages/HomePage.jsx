@@ -1,19 +1,9 @@
 import { useState } from 'react'
-import { ChevronRight, Calendar, Zap, Plus, Settings2 } from 'lucide-react'
+import { Zap, Plus, Settings2, Calendar } from 'lucide-react'
 import Header from '../components/Header'
+import MiniCalendar from '../components/MiniCalendar'
 import { upcomingDates, quickActions } from '../data/upcomingDates'
 
-function getDaysUntil(dateStr) {
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
-  const target = new Date(dateStr)
-  target.setHours(0, 0, 0, 0)
-  const diff = Math.round((target - today) / (1000 * 60 * 60 * 24))
-  if (diff === 0) return 'TODAY'
-  if (diff === 1) return 'Tomorrow'
-  if (diff < 0) return null
-  return `${diff}d`
-}
 
 function QuickActionModal({ action, onClose }) {
   const info = {
@@ -86,11 +76,6 @@ export default function HomePage() {
   const today = new Date()
   const greeting = today.getHours() < 12 ? 'Good morning' : today.getHours() < 17 ? 'Good afternoon' : 'Good evening'
 
-  const visibleDates = upcomingDates
-    .map(d => ({ ...d, daysLabel: getDaysUntil(d.date) }))
-    .filter(d => d.daysLabel !== null)
-    .sort((a, b) => new Date(a.date) - new Date(b.date))
-    .slice(0, 5)
 
   return (
     <div className="flex flex-col min-h-full pb-20 animate-fade-in">
@@ -147,39 +132,15 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Upcoming Dates widget */}
+        {/* Calendar widget */}
         <section>
           <div className="flex items-center justify-between mb-2.5">
             <div className="flex items-center gap-2">
               <Calendar size={14} className="text-electric" />
               <h2 className="text-white font-bold text-base">On the Radar</h2>
             </div>
-            <button className="flex items-center gap-1 px-2.5 py-1 rounded-full border border-navy-600 text-slate-400 text-xs">
-              <Settings2 size={11} /> Edit
-            </button>
           </div>
-
-          <div className="bg-navy-800 rounded-2xl overflow-hidden border border-navy-600/40">
-            {visibleDates.map((item, i) => (
-              <div
-                key={item.id}
-                className={`flex items-center gap-3 px-4 py-3.5 ${
-                  i < visibleDates.length - 1 ? 'border-b border-navy-600/40' : ''
-                }`}
-              >
-                <span className="text-xl shrink-0">{item.icon}</span>
-                <div className="flex-1 min-w-0">
-                  <p className="text-white text-sm font-medium truncate">{item.label}</p>
-                  <p className="text-slate-500 text-xs">
-                    {new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                  </p>
-                </div>
-                <span className={`shrink-0 text-xs font-bold px-2.5 py-1 rounded-lg ${item.bg} ${item.color} border ${item.border}`}>
-                  {item.daysLabel}
-                </span>
-              </div>
-            ))}
-          </div>
+          <MiniCalendar events={upcomingDates} />
         </section>
 
         {/* Daily Edge widget */}
