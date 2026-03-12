@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Zap, Plus, Settings2, Calendar, Trophy, ChevronDown, ChevronUp } from 'lucide-react'
+import { Zap, Plus, Settings2, Calendar, Trophy, ChevronDown, ChevronUp, X, Send, Camera } from 'lucide-react'
 import Header from '../components/Header'
 import MiniCalendar from '../components/MiniCalendar'
 import { upcomingDates, quickActions } from '../data/upcomingDates'
@@ -66,6 +66,235 @@ function QuickActionModal({ action, onClose }) {
         <button onClick={onClose} className="w-full mt-2 py-2 text-slate-500 text-xs">
           Close
         </button>
+      </div>
+    </div>
+  )
+}
+
+const CONTENT_TYPES = ['Day in the Life', 'Workout/Training', 'Q&A', 'Event Coverage', 'Campus Tour', 'Motivation', 'Other']
+const CONTENT_RECIPIENT = 'corallee_alexander@byu.edu'
+
+function ContentSignupModal({ onClose }) {
+  const [tab, setTab] = useState('film')       // 'film' | 'suggest'
+  const [submitted, setSubmitted] = useState(false)
+
+  // Film form
+  const [filmName, setFilmName] = useState('')
+  const [filmSport, setFilmSport] = useState('')
+  const [filmInsta, setFilmInsta] = useState('')
+  const [filmTypes, setFilmTypes] = useState([])
+  const [filmAvail, setFilmAvail] = useState('')
+
+  // Suggest form
+  const [suggestIdea, setSuggestIdea] = useState('')
+  const [suggestType, setSuggestType] = useState('')
+  const [suggestName, setSuggestName] = useState('')
+
+  function toggleType(t) {
+    setFilmTypes(prev => prev.includes(t) ? prev.filter(x => x !== t) : [...prev, t])
+  }
+
+  function submitFilm() {
+    if (!filmName || !filmSport) return
+    const subject = encodeURIComponent('Built4Life Content Creator Sign-Up')
+    const body = encodeURIComponent(
+      `Name: ${filmName}\nSport/Team: ${filmSport}\nInstagram: ${filmInsta || 'N/A'}\nContent Types: ${filmTypes.join(', ') || 'Any'}\nAvailability: ${filmAvail || 'Flexible'}`
+    )
+    window.open(`mailto:${CONTENT_RECIPIENT}?subject=${subject}&body=${body}`)
+    setSubmitted(true)
+  }
+
+  function submitSuggest() {
+    if (!suggestIdea) return
+    const subject = encodeURIComponent('Built4Life Content Idea Suggestion')
+    const body = encodeURIComponent(
+      `Idea: ${suggestIdea}\nType: ${suggestType || 'General'}\nFrom: ${suggestName || 'Anonymous'}`
+    )
+    window.open(`mailto:${CONTENT_RECIPIENT}?subject=${subject}&body=${body}`)
+    setSubmitted(true)
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 backdrop-blur-sm p-0">
+      <div
+        className="w-full max-w-lg bg-navy-800 rounded-t-3xl border-t border-navy-600/60 animate-slide-up"
+        style={{ maxHeight: '90vh', overflowY: 'auto' }}
+      >
+        {/* Handle + header */}
+        <div className="sticky top-0 bg-navy-800 pt-3 pb-0 px-5 z-10">
+          <div className="w-10 h-1 rounded-full bg-navy-600 mx-auto mb-4" />
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <Camera size={18} className="text-electric" />
+              <h3 className="text-white font-bold text-lg">Create with Built4Life</h3>
+            </div>
+            <button onClick={onClose} className="w-8 h-8 flex items-center justify-center text-slate-500">
+              <X size={18} />
+            </button>
+          </div>
+
+          {/* Tabs */}
+          <div className="flex rounded-xl bg-navy-900 p-1 mb-5">
+            {[['film', '🎬 Film with Us'], ['suggest', '💡 Suggest an Idea']].map(([id, label]) => (
+              <button
+                key={id}
+                onClick={() => { setTab(id); setSubmitted(false) }}
+                className={`flex-1 py-2 rounded-lg text-xs font-semibold transition-all ${
+                  tab === id ? 'bg-electric text-navy-900' : 'text-slate-500'
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="px-5 pb-10">
+          {submitted ? (
+            <div className="text-center py-10">
+              <div className="text-5xl mb-4">🙌</div>
+              <p className="text-white font-bold text-lg mb-2">You're on the list!</p>
+              <p className="text-slate-400 text-sm leading-relaxed">
+                {tab === 'film'
+                  ? "We'll reach out soon to schedule filming. Keep an eye on your inbox!"
+                  : "Your idea has been sent to the Built4Life content team. Thanks for pitching!"}
+              </p>
+              <button
+                onClick={onClose}
+                className="mt-6 px-6 py-2.5 rounded-xl bg-electric text-navy-900 font-bold text-sm"
+              >
+                Done
+              </button>
+            </div>
+          ) : tab === 'film' ? (
+            <div className="space-y-4">
+              <p className="text-slate-400 text-sm leading-relaxed">
+                Want to be featured on Built4Life's Instagram? Sign up to create content with us — we'll reach out to schedule a shoot.
+              </p>
+
+              <div>
+                <label className="text-slate-400 text-xs font-medium block mb-1.5">Full Name *</label>
+                <input
+                  value={filmName}
+                  onChange={e => setFilmName(e.target.value)}
+                  placeholder="Your name"
+                  className="w-full bg-navy-900 border border-navy-600/60 rounded-xl px-4 py-3 text-white text-sm placeholder:text-slate-600 outline-none focus:border-electric/50"
+                />
+              </div>
+
+              <div>
+                <label className="text-slate-400 text-xs font-medium block mb-1.5">Sport / Team *</label>
+                <input
+                  value={filmSport}
+                  onChange={e => setFilmSport(e.target.value)}
+                  placeholder="e.g. Football, Women's Volleyball..."
+                  className="w-full bg-navy-900 border border-navy-600/60 rounded-xl px-4 py-3 text-white text-sm placeholder:text-slate-600 outline-none focus:border-electric/50"
+                />
+              </div>
+
+              <div>
+                <label className="text-slate-400 text-xs font-medium block mb-1.5">Instagram Handle</label>
+                <input
+                  value={filmInsta}
+                  onChange={e => setFilmInsta(e.target.value)}
+                  placeholder="@yourhandle"
+                  className="w-full bg-navy-900 border border-navy-600/60 rounded-xl px-4 py-3 text-white text-sm placeholder:text-slate-600 outline-none focus:border-electric/50"
+                />
+              </div>
+
+              <div>
+                <label className="text-slate-400 text-xs font-medium block mb-2">Content I'd love to make</label>
+                <div className="flex flex-wrap gap-2">
+                  {CONTENT_TYPES.map(t => (
+                    <button
+                      key={t}
+                      onClick={() => toggleType(t)}
+                      className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
+                        filmTypes.includes(t)
+                          ? 'bg-electric/20 border-electric text-electric'
+                          : 'bg-navy-900 border-navy-600/60 text-slate-400'
+                      }`}
+                    >
+                      {t}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="text-slate-400 text-xs font-medium block mb-1.5">Availability</label>
+                <input
+                  value={filmAvail}
+                  onChange={e => setFilmAvail(e.target.value)}
+                  placeholder="e.g. Weekday afternoons, flexible..."
+                  className="w-full bg-navy-900 border border-navy-600/60 rounded-xl px-4 py-3 text-white text-sm placeholder:text-slate-600 outline-none focus:border-electric/50"
+                />
+              </div>
+
+              <button
+                onClick={submitFilm}
+                disabled={!filmName || !filmSport}
+                className="w-full py-4 rounded-2xl bg-electric text-navy-900 font-bold flex items-center justify-center gap-2 disabled:opacity-40"
+              >
+                <Send size={16} /> Sign Me Up
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              <p className="text-slate-400 text-sm leading-relaxed">
+                Have a great idea for Built4Life's Instagram? Pitch it — the best ideas get made.
+              </p>
+
+              <div>
+                <label className="text-slate-400 text-xs font-medium block mb-1.5">Your Idea *</label>
+                <textarea
+                  value={suggestIdea}
+                  onChange={e => setSuggestIdea(e.target.value)}
+                  placeholder="Describe your content idea..."
+                  rows={4}
+                  className="w-full bg-navy-900 border border-navy-600/60 rounded-xl px-4 py-3 text-white text-sm placeholder:text-slate-600 outline-none focus:border-electric/50 resize-none"
+                />
+              </div>
+
+              <div>
+                <label className="text-slate-400 text-xs font-medium block mb-2">Type of Post</label>
+                <div className="flex flex-wrap gap-2">
+                  {CONTENT_TYPES.map(t => (
+                    <button
+                      key={t}
+                      onClick={() => setSuggestType(t)}
+                      className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
+                        suggestType === t
+                          ? 'bg-electric/20 border-electric text-electric'
+                          : 'bg-navy-900 border-navy-600/60 text-slate-400'
+                      }`}
+                    >
+                      {t}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="text-slate-400 text-xs font-medium block mb-1.5">Your Name (optional)</label>
+                <input
+                  value={suggestName}
+                  onChange={e => setSuggestName(e.target.value)}
+                  placeholder="Leave blank to stay anonymous"
+                  className="w-full bg-navy-900 border border-navy-600/60 rounded-xl px-4 py-3 text-white text-sm placeholder:text-slate-600 outline-none focus:border-electric/50"
+                />
+              </div>
+
+              <button
+                onClick={submitSuggest}
+                disabled={!suggestIdea}
+                className="w-full py-4 rounded-2xl bg-electric text-navy-900 font-bold flex items-center justify-center gap-2 disabled:opacity-40"
+              >
+                <Send size={16} /> Pitch This Idea
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )
@@ -167,6 +396,7 @@ function AlstonWidget() {
 
 export default function HomePage() {
   const [activeModal, setActiveModal] = useState(null)
+  const [contentOpen, setContentOpen] = useState(false)
 
   const today = new Date()
   today.setHours(0, 0, 0, 0)
@@ -267,6 +497,34 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* Create with Built4Life */}
+        <section>
+          <button
+            onClick={() => setContentOpen(true)}
+            className="w-full text-left bg-gradient-to-br from-cougar-bright via-cougar to-navy-800 rounded-2xl border border-electric/30 p-5 no-select active:scale-[0.98] transition-transform"
+          >
+            <div className="flex items-start justify-between">
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <Camera size={16} className="text-electric" />
+                  <span className="text-electric text-xs font-bold tracking-wide uppercase">Built4Life Instagram</span>
+                </div>
+                <h3 className="text-white font-bold text-lg leading-tight mb-1.5">
+                  Create Content With Us 📸
+                </h3>
+                <p className="text-slate-300 text-sm leading-relaxed">
+                  Sign up to film or pitch an idea for our Instagram. Your story deserves to be seen.
+                </p>
+              </div>
+              <span className="text-3xl ml-3 shrink-0">🎬</span>
+            </div>
+            <div className="flex gap-2 mt-4">
+              <span className="px-3 py-1 rounded-full bg-electric/20 border border-electric/30 text-electric text-xs font-semibold">Film with Us</span>
+              <span className="px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white text-xs font-semibold">Suggest an Idea</span>
+            </div>
+          </button>
+        </section>
+
         {/* Alston Award Progress */}
         <section>
           <div className="flex items-center gap-2 mb-2.5">
@@ -294,6 +552,9 @@ export default function HomePage() {
 
       {activeModal && (
         <QuickActionModal action={activeModal} onClose={() => setActiveModal(null)} />
+      )}
+      {contentOpen && (
+        <ContentSignupModal onClose={() => setContentOpen(false)} />
       )}
     </div>
   )
