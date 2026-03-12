@@ -6,11 +6,11 @@ export default {
       colors: {
         navy: {
           950: '#030710',
-          900: '#070C18',
-          800: '#0D1526',
-          700: '#111E36',
-          600: '#1A2C4E',
-          500: '#1E3A5F',
+          900: '#0B1523',   // page background — matches BYU app
+          800: '#162236',   // card background — visibly lighter than page
+          700: '#1D2E47',   // elevated card / active state
+          600: '#243655',   // borders, dividers
+          500: '#2C4169',   // subtle highlights
         },
         cougar: {
           DEFAULT: '#002E5D',

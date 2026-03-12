@@ -1,136 +1,123 @@
-import { ExternalLink, ChevronRight, Phone, MapPin, Globe, Shield, Heart, Briefcase, GraduationCap } from 'lucide-react'
+import { useState } from 'react'
+import { ChevronRight, Plus, Search } from 'lucide-react'
+import Header from '../components/Header'
 
-const resources = [
-  {
-    section: 'Academic',
-    icon: GraduationCap,
-    color: 'text-electric',
-    bg: 'bg-electric/10',
-    items: [
-      { label: 'Tutoring Center', detail: 'Free, on-demand subject tutoring', icon: '📖' },
-      { label: 'Academic Advising', detail: 'Plan your degree path', icon: '🗺️' },
-      { label: 'Testing Center', detail: 'Extended time & accommodations', icon: '📝' },
-      { label: 'Writing Center', detail: 'Paper reviews & feedback', icon: '✍️' },
-    ],
-  },
-  {
-    section: 'Mental Health',
-    icon: Heart,
-    color: 'text-sky-300',
-    bg: 'bg-sky-300/10',
-    items: [
-      { label: 'CAPS', detail: '(801) 422-3035 · Free & confidential', icon: '💜' },
-      { label: 'Crisis Line', detail: '988 — 24/7 support', icon: '🆘' },
-      { label: "Athlete Mental Health", detail: 'Sport-specific counseling', icon: '🧠' },
-      { label: 'Meditation Rooms', detail: 'WSC quiet spaces', icon: '🧘' },
-    ],
-  },
-  {
-    section: 'Career & NIL',
-    icon: Briefcase,
-    color: 'text-tan',
-    bg: 'bg-tan/10',
-    items: [
-      { label: 'Career Center', detail: '3rd floor Wilk · Free advising', icon: '🚀' },
-      { label: 'NIL Compliance', detail: 'Disclose deals before signing', icon: '⚖️' },
-      { label: 'LinkedIn Workshop', detail: 'Monthly free sessions', icon: '💼' },
-      { label: 'Alumni Network', detail: 'Connect with BYU grads', icon: '🤝' },
-    ],
-  },
-  {
-    section: 'Safety & Reporting',
-    icon: Shield,
-    color: 'text-electric',
-    bg: 'bg-electric/10',
-    items: [
-      { label: 'SafetyNet', detail: 'Anonymous concern reporting', icon: '🛡️' },
-      { label: 'BYU Police', detail: '(801) 422-2222', icon: '🚔' },
-      { label: 'Title IX Office', detail: 'Confidential, no retaliation', icon: '🔒' },
-      { label: 'Ombudsman', detail: 'Neutral conflict resolution', icon: '⚖️' },
-    ],
-  },
+const allTools = [
+  { id: 1, label: 'Academic Advising', icon: '🗺️', category: 'Academic' },
+  { id: 2, label: 'Book a Tutor', icon: '📖', category: 'Academic' },
+  { id: 3, label: 'Testing Center', icon: '📝', category: 'Academic' },
+  { id: 4, label: 'Writing Center', icon: '✍️', category: 'Academic' },
+  { id: 5, label: 'CAPS — Counseling', icon: '💬', category: 'Wellness', detail: '(801) 422-3035 · Free' },
+  { id: 6, label: 'Crisis Line', icon: '🆘', category: 'Wellness', detail: '988 — 24/7' },
+  { id: 7, label: 'Athlete Mental Health', icon: '🧠', category: 'Wellness' },
+  { id: 8, label: 'Meditation Rooms', icon: '🧘', category: 'Wellness', detail: 'WSC quiet spaces' },
+  { id: 9, label: 'Career Center', icon: '🚀', category: 'Career', detail: '3rd floor Wilk' },
+  { id: 10, label: 'NIL Compliance', icon: '⚖️', category: 'Career', detail: 'Disclose before signing' },
+  { id: 11, label: 'LinkedIn Workshop', icon: '💼', category: 'Career', detail: 'Monthly — free' },
+  { id: 12, label: 'Alumni Network', icon: '🤝', category: 'Career' },
+  { id: 13, label: 'SafetyNet', icon: '🛡️', category: 'Campus', detail: 'Anonymous reporting' },
+  { id: 14, label: 'BYU Police', icon: '🚔', category: 'Campus', detail: '(801) 422-2222' },
+  { id: 15, label: 'Title IX Office', icon: '🔒', category: 'Campus', detail: 'Confidential' },
+  { id: 16, label: 'Ombudsman', icon: '⚖️', category: 'Campus', detail: 'Conflict resolution' },
+  { id: 17, label: 'Cougar Cash', icon: '💳', category: 'Financial' },
+  { id: 18, label: 'My Financial Center', icon: '📊', category: 'Financial' },
+  { id: 19, label: 'Scholarship Info', icon: '🎓', category: 'Financial' },
+  { id: 20, label: 'BYU Homepage', icon: '🌐', category: 'Campus' },
 ]
 
-const teamInfo = [
-  { label: 'Version', value: '1.0.0' },
-  { label: 'Built for', value: 'BYU Student-Athletes' },
-  { label: 'Data security', value: 'No personal data stored' },
-  { label: 'Feedback', value: 'athletics@byu.edu' },
-]
+const filters = ['All', 'Academic', 'Wellness', 'Career', 'Campus', 'Financial']
 
 export default function MorePage() {
+  const [activeFilter, setActiveFilter] = useState('All')
+  const [search, setSearch] = useState('')
+
+  const visible = allTools.filter(t => {
+    const matchFilter = activeFilter === 'All' || t.category === activeFilter
+    const matchSearch = t.label.toLowerCase().includes(search.toLowerCase())
+    return matchFilter && matchSearch
+  })
+
   return (
     <div className="flex flex-col min-h-full pb-20 animate-fade-in">
-      {/* Header */}
-      <div
-        className="px-5 pt-12 pb-5"
-        style={{ background: 'linear-gradient(180deg, #001A3A 0%, #070C18 100%)' }}
-      >
-        <h1 className="text-2xl font-bold text-white mb-1">More</h1>
-        <p className="text-slate-400 text-sm">Resources, contacts, and app info.</p>
+      <Header title="All Tools" rightElement={null} />
+
+      {/* Search bar — matches BYU All Tools exactly */}
+      <div className="px-4 pb-3">
+        <div className="flex items-center gap-2 bg-navy-800 border border-navy-600/40 rounded-xl px-3 py-2.5">
+          <Search size={15} className="text-slate-500 shrink-0" />
+          <input
+            type="text"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="Search"
+            className="flex-1 bg-transparent text-white text-sm placeholder-slate-500 outline-none"
+          />
+        </div>
       </div>
 
-      <div className="px-4 py-4 space-y-5">
-        {/* BYU brand strip */}
-        <div
-          className="p-4 rounded-2xl flex items-center gap-3"
-          style={{ background: 'linear-gradient(135deg, #002E5D 0%, #001830 100%)' }}
-        >
-          <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center">
-            <span className="text-2xl font-black text-white">Y</span>
-          </div>
-          <div>
-            <p className="text-white font-bold">BYU Athletics</p>
-            <p className="text-slate-300 text-xs">Student-Athlete Resources</p>
-          </div>
+      {/* Filter pills — matches BYU "Filter By:" */}
+      <div className="px-4 mb-4">
+        <p className="text-slate-500 text-xs font-semibold uppercase tracking-wider mb-2">Filter By:</p>
+        <div className="flex gap-2 overflow-x-auto scrollbar-none pb-1">
+          {filters.map(f => (
+            <button
+              key={f}
+              onClick={() => setActiveFilter(f)}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap border transition-all ${
+                activeFilter === f
+                  ? 'bg-electric text-navy-900 border-electric font-semibold'
+                  : 'bg-transparent text-slate-300 border-navy-600'
+              }`}
+            >
+              {f}
+            </button>
+          ))}
         </div>
+      </div>
 
-        {/* Resource sections */}
-        {resources.map(section => {
-          const SectionIcon = section.icon
-          return (
-            <div key={section.section}>
-              <div className="flex items-center gap-2 mb-2.5">
-                <SectionIcon size={14} className={section.color} />
-                <h2 className={`text-xs font-semibold uppercase tracking-wider ${section.color}`}>
-                  {section.section}
-                </h2>
-              </div>
-              <div className="space-y-1.5">
-                {section.items.map(item => (
-                  <div
-                    key={item.label}
-                    className="flex items-center gap-3 p-3.5 rounded-xl bg-navy-800 border border-navy-600/60"
-                  >
-                    <span className="text-xl shrink-0">{item.icon}</span>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-white text-sm font-medium">{item.label}</p>
-                      <p className="text-slate-500 text-xs">{item.detail}</p>
-                    </div>
-                    <ChevronRight size={14} className="text-slate-700 shrink-0" />
-                  </div>
-                ))}
-              </div>
+      {/* Tool list — matches BYU All Tools row style exactly */}
+      <div className="mx-4 bg-navy-800 rounded-2xl border border-navy-600/40 overflow-hidden">
+        {visible.map((tool, i) => (
+          <button
+            key={tool.id}
+            className={`w-full flex items-center gap-3 px-4 py-3.5 text-left no-select active:bg-navy-700 transition-colors ${
+              i < visible.length - 1 ? 'border-b border-navy-600/40' : ''
+            }`}
+          >
+            <div className="w-9 h-9 rounded-xl bg-navy-700 border border-navy-500/40 flex items-center justify-center text-lg shrink-0">
+              {tool.icon}
             </div>
-          )
-        })}
+            <div className="flex-1 min-w-0">
+              <p className="text-white text-sm font-medium truncate">{tool.label}</p>
+              {tool.detail && <p className="text-slate-500 text-xs">{tool.detail}</p>}
+            </div>
+            <div className="w-6 h-6 rounded-full bg-electric/15 border border-electric/30 flex items-center justify-center shrink-0">
+              <Plus size={12} className="text-electric" />
+            </div>
+          </button>
+        ))}
 
-        {/* App info */}
-        <div>
-          <h2 className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2.5">About Built4Life</h2>
-          <div className="rounded-xl bg-navy-800 border border-navy-600/60 divide-y divide-navy-600/60">
-            {teamInfo.map(item => (
-              <div key={item.label} className="flex items-center justify-between px-4 py-3">
-                <span className="text-slate-400 text-sm">{item.label}</span>
-                <span className="text-white text-sm font-medium">{item.value}</span>
-              </div>
-            ))}
+        {visible.length === 0 && (
+          <div className="py-8 text-center text-slate-500 text-sm">
+            No tools found
           </div>
-        </div>
+        )}
+      </div>
 
-        <p className="text-center text-slate-700 text-xs pb-2">
-          Built with ❤️ for BYU Cougars.
-        </p>
+      {/* App info */}
+      <div className="mx-4 mt-4 bg-navy-800 rounded-2xl border border-navy-600/40 divide-y divide-navy-600/40">
+        <div className="flex items-center justify-between px-4 py-3">
+          <span className="text-slate-400 text-sm">Version</span>
+          <span className="text-white text-sm font-medium">1.0.0</span>
+        </div>
+        <div className="flex items-center justify-between px-4 py-3">
+          <span className="text-slate-400 text-sm">Built for</span>
+          <span className="text-white text-sm font-medium">BYU Student-Athletes</span>
+        </div>
+        <div className="flex items-center justify-between px-4 py-3">
+          <span className="text-slate-400 text-sm">Feedback</span>
+          <span className="text-electric text-sm font-medium">athletics@byu.edu</span>
+        </div>
       </div>
     </div>
   )

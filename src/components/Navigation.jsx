@@ -1,42 +1,35 @@
-import { Home, Gamepad2, BookOpen, Star, MoreHorizontal } from 'lucide-react'
+import { Home, Gamepad2, BookOpen, Star, LayoutGrid } from 'lucide-react'
 
 const tabs = [
   { id: 'home', label: 'Home', icon: Home },
   { id: 'play', label: 'Play', icon: Gamepad2 },
   { id: 'support', label: 'Support', icon: BookOpen },
   { id: 'spotlight', label: 'Spotlight', icon: Star },
-  { id: 'more', label: 'More', icon: MoreHorizontal },
+  { id: 'more', label: 'All Tools', icon: LayoutGrid },
 ]
 
 export default function Navigation({ activeTab, onTabChange }) {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-navy-800 border-t border-navy-600/60 pb-safe">
-      <div className="max-w-lg mx-auto flex items-center justify-around px-1">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-navy-900 border-t border-navy-600/30">
+      <div className="max-w-lg mx-auto flex items-center justify-around">
         {tabs.map(({ id, label, icon: Icon }) => {
           const isActive = activeTab === id
           return (
             <button
               key={id}
               onClick={() => onTabChange(id)}
-              className={`flex flex-col items-center justify-center py-3 px-3 min-w-0 flex-1 transition-all duration-200 ${
-                isActive ? 'text-electric' : 'text-slate-500'
+              className={`flex flex-col items-center justify-center py-2.5 px-2 min-w-0 flex-1 transition-all duration-150 ${
+                isActive ? 'text-white' : 'text-slate-600'
               }`}
               aria-label={label}
             >
-              <div className={`relative flex items-center justify-center w-10 h-8 rounded-xl transition-all duration-200 ${
-                isActive ? 'bg-electric/10' : ''
-              }`}>
-                <Icon
-                  size={isActive ? 22 : 20}
-                  strokeWidth={isActive ? 2.5 : 1.8}
-                  className="transition-all duration-200"
-                />
-                {isActive && (
-                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-electric" />
-                )}
-              </div>
-              <span className={`text-[10px] font-medium mt-0.5 transition-all duration-200 ${
-                isActive ? 'text-electric' : 'text-slate-600'
+              <Icon
+                size={22}
+                strokeWidth={isActive ? 2.2 : 1.6}
+                className="transition-all duration-150"
+              />
+              <span className={`text-[10px] mt-1 transition-all duration-150 ${
+                isActive ? 'text-white font-semibold' : 'text-slate-600 font-normal'
               }`}>
                 {label}
               </span>

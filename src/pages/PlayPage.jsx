@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Gamepad2 } from 'lucide-react'
+import Header from '../components/Header'
 import ProScout from '../games/ProScout'
 import BudgetBlitz from '../games/BudgetBlitz'
 import MediaMinefield from '../games/MediaMinefield'
@@ -85,38 +85,30 @@ export default function PlayPage() {
 
   return (
     <div className="flex flex-col min-h-full pb-20 animate-fade-in">
-      {/* Header */}
-      <div
-        className="px-5 pt-12 pb-5"
-        style={{ background: 'linear-gradient(180deg, #001A3A 0%, #070C18 100%)' }}
-      >
-        <div className="flex items-center gap-2 mb-1">
-          <Gamepad2 size={18} className="text-electric" />
-          <h1 className="text-2xl font-bold text-white">Play</h1>
-        </div>
-        <p className="text-slate-400 text-sm">Real skills. No homework. Under 60 seconds.</p>
-      </div>
+      <Header title="Play" />
+
+      <p className="text-slate-400 text-sm px-5 pb-4">Real skills. No homework. Under 60 seconds.</p>
 
       {/* Stats bar */}
-      <div className="mx-4 mt-4 p-4 rounded-2xl bg-navy-800 border border-navy-600/60 flex items-center justify-around">
+      <div className="mx-4 mb-4 bg-navy-800 rounded-2xl border border-navy-600/40 flex items-center justify-around py-3">
         <div className="text-center">
           <div className="text-xl font-bold text-electric">{games.length}</div>
           <div className="text-slate-500 text-xs">Games</div>
         </div>
-        <div className="w-px h-8 bg-navy-600" />
+        <div className="w-px h-7 bg-navy-600/60" />
         <div className="text-center">
           <div className="text-xl font-bold text-electric">&lt;60s</div>
           <div className="text-slate-500 text-xs">Each</div>
         </div>
-        <div className="w-px h-8 bg-navy-600" />
+        <div className="w-px h-7 bg-navy-600/60" />
         <div className="text-center">
           <div className="text-xl font-bold text-electric">0</div>
           <div className="text-slate-500 text-xs">GPA Impact</div>
         </div>
       </div>
 
-      {/* Game Cards */}
-      <div className="px-4 mt-5 space-y-3">
+      {/* Game list — card style matching BYU widget cards */}
+      <div className="px-4 space-y-3">
         {games.map(game => (
           <button
             key={game.id}
