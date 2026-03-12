@@ -74,7 +74,13 @@ export default function HomePage() {
   const [activeModal, setActiveModal] = useState(null)
 
   const today = new Date()
+  today.setHours(0, 0, 0, 0)
   const greeting = today.getHours() < 12 ? 'Good morning' : today.getHours() < 17 ? 'Good afternoon' : 'Good evening'
+
+  const nextEvents = upcomingDates
+    .filter(d => new Date(d.date) >= today)
+    .sort((a, b) => new Date(a.date) - new Date(b.date))
+    .slice(0, 3)
 
 
   return (
@@ -141,6 +147,29 @@ export default function HomePage() {
             </div>
           </div>
           <MiniCalendar events={upcomingDates} />
+
+          {/* Next 3 upcoming events */}
+          <div className="mt-3 bg-navy-800 rounded-2xl border border-navy-600/40 overflow-hidden">
+            {nextEvents.map((item, i) => {
+              const daysAway = Math.round((new Date(item.date) - today) / (1000 * 60 * 60 * 24))
+              const label = daysAway === 0 ? 'Today' : daysAway === 1 ? 'Tomorrow' : `In ${daysAway}d`
+              return (
+                <div
+                  key={item.id}
+                  className={`flex items-center gap-3 px-4 py-3 ${i < nextEvents.length - 1 ? 'border-b border-navy-600/40' : ''}`}
+                >
+                  <span className="text-lg shrink-0">{item.icon}</span>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-white text-sm font-medium truncate">{item.label}</p>
+                    <p className="text-slate-500 text-xs">
+                      {new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                    </p>
+                  </div>
+                  <span className={`text-xs font-bold shrink-0 ${item.color}`}>{label}</span>
+                </div>
+              )
+            })}
+          </div>
         </section>
 
         {/* Daily Edge widget */}
