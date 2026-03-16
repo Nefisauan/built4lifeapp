@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Header from '../components/Header'
-import { ExternalLink, Mail, Phone, ChevronDown, ChevronUp } from 'lucide-react'
+import { ExternalLink, Mail, Phone, ChevronDown, ChevronUp, Clock } from 'lucide-react'
 
 // ── Staff organized by category ────────────────────────────────────────────
 
@@ -215,6 +215,34 @@ export default function TeamPage() {
           >
             b4lsac.byu.edu <ExternalLink size={13} />
           </a>
+        </div>
+      </div>
+
+      {/* Hours card */}
+      <div className="px-4 pb-5">
+        <div className="bg-navy-800 rounded-2xl border border-electric/20 p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <Clock size={16} className="text-electric" />
+            <h3 className="text-white font-bold text-sm">Center Hours</h3>
+          </div>
+          <div className="space-y-2">
+            {[
+              { days: 'Monday – Friday', hours: '7:00 am – 12:00 am' },
+              { days: 'Saturday', hours: '9:00 am – 3:00 pm' },
+              { days: 'Sunday', hours: 'Closed' },
+            ].map(({ days, hours }) => (
+              <div key={days} className="flex items-center justify-between">
+                <span className="text-slate-400 text-xs">{days}</span>
+                <span className={`text-xs font-semibold ${hours === 'Closed' ? 'text-slate-500' : 'text-electric'}`}>{hours}</span>
+              </div>
+            ))}
+          </div>
+          <div className="mt-3 pt-3 border-t border-navy-600/40">
+            <a href="tel:8014224636" className="flex items-center gap-1.5 text-slate-400 text-xs">
+              <Phone size={11} className="shrink-0" />
+              801-422-4636
+            </a>
+          </div>
         </div>
       </div>
 
